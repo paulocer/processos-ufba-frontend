@@ -68,7 +68,7 @@ export default function SignInSide() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Cadastro de Processos
+            Cadastro de Requerimentos
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -108,7 +108,7 @@ export default function SignInSide() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="/home" variant="body2">
+                <Link href="/recupera" variant="body2">
                   Esqueceu sua senha?
                 </Link>
               </Grid>
