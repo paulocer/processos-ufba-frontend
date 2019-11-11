@@ -73,6 +73,7 @@ export default function SignUp() {
                 label="Nome Completo"
                 name="nomeCompleto"
                 autoComplete="nomeCompleto"
+                autoFocus
               />
             </Grid>
             <Grid item xs={12} sm={3}>
@@ -84,7 +85,6 @@ export default function SignUp() {
                 fullWidth
                 id="matricula"
                 label="Nº Matrícula"
-                autoFocus
               />
             </Grid>
             <Grid item xs={12} sm={9}>
@@ -94,7 +94,6 @@ export default function SignUp() {
                 fullWidth
                 name="curso"
                 label="Curso"
-                type="curso"
                 id="curso"
                 autoComplete="curso"
               />
