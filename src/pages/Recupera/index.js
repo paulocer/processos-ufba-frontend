@@ -17,7 +17,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="https://disciplinas.dcc.ufba.br/MATC84/WebHome">
         MATC84 - DCC - UFBA
       </Link>{' '}
       {new Date().getFullYear()}
