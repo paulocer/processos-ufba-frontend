@@ -10,8 +10,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import NumberFormat from 'react-number-format';
-import { Redirect } from 'react-router-dom';
 
+import history from '../../history';
 import Copyright from '../tail';
 import useStyles from './style';
 import api from '../../server/config'
@@ -32,7 +32,7 @@ export default function SignUp() {
   });
 
   //Efetua o cadastro realizando um post na api
-  const handleSubmit = (event) => {
+   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     
@@ -41,9 +41,16 @@ export default function SignUp() {
    for (let entry of formData.entries()) {
        usuario[entry[0]] = entry[1]
    }  
-   
-    api.post('/cadastro', {usuario: usuario})
-        .then(); // adicionar o redirect
+   try{
+     //realiza o post
+     await api.post('/cadastro', {usuario: usuario});
+     alert("Cadastro realizado com Sucesso!");
+     //retorna para a home
+     history.push('/');
+   }catch(err){
+      alert(`Houve um erro ao efetuar o cadastro`);
+   }       
+
   }
 
   return (
