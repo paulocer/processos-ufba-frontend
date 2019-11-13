@@ -8,49 +8,18 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import NumberFormat from 'react-number-format';
+import { Redirect } from 'react-router-dom';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://disciplinas.dcc.ufba.br/MATC84/WebHome">
-        MATC84 - DCC - UFBA
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import Copyright from '../tail';
+import useStyles from './style';
+import api from '../../server/config'
 
-const useStyles = makeStyles(theme => ({
-  '@global': {
-    body: {
-      backgroundColor: theme.palette.common.white,
-    },
-  },
-  paper: {
-    marginTop: theme.spacing(4),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '200%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
 
 export default function SignUp() {
+  const classes = useStyles();
+
   const [validator, setValidator] = useState({
     nome: false,
     matricula: false,
@@ -61,7 +30,21 @@ export default function SignUp() {
     password: false,
     confirma: false
   });
-  const classes = useStyles();
+
+  //Efetua o cadastro realizando um post na api
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    
+   const usuario = {} 
+
+   for (let entry of formData.entries()) {
+       usuario[entry[0]] = entry[1]
+   }  
+   
+    api.post('/cadastro', {usuario: usuario})
+        .then(); // adicionar o redirect
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -73,7 +56,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           CADASTRO DO ALUNO
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit= {handleSubmit}>
           <Grid container spacing={1}>
           <Grid item xs={12}>
               <TextField
