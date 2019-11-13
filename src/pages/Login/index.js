@@ -15,12 +15,33 @@ import NumberFormat from 'react-number-format';
 
 import useStyles from './style';
 import Copyright from '../tail';
-
+import api from '../../server/config'
 
 export default function SignInSide() {
   const [validator, setValidator] = useState({matricula: false, password: false});
   const classes = useStyles();
 
+  const handleSubmit = async (event) => {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+    
+   const usuario = {} 
+
+   for (let entry of formData.entries()) {
+       usuario[entry[0]] = entry[1]
+   }  
+
+   try{
+    //realiza o post
+    await api.get('/login', {matricula: usuario.matricula, password: usuario.password});
+    alert("Login efetuado com Sucesso!");
+    
+    
+  }catch(err){
+     alert(`Houve um erro ao efetuar o login`);
+  }
+
+  }
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -33,7 +54,7 @@ export default function SignInSide() {
           <Typography component="h1" variant="h5">
             Cadastro de Requerimentos
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <NumberFormat
               customInput={TextField}
               format="#########"
