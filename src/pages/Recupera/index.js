@@ -1,10 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -12,6 +10,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import NumberFormat from 'react-number-format';
 
 function Copyright() {
   return (
@@ -52,6 +51,7 @@ const useStyles = makeStyles(theme => ({
   }));
   
   export default function SignIn() {
+    const [validator, setValidator] = useState({matricula: false});
     const classes = useStyles();
   
     return (
@@ -65,7 +65,10 @@ const useStyles = makeStyles(theme => ({
             Recuperação de Senha
           </Typography>
           <form className={classes.form} noValidate>
-            <TextField
+          <NumberFormat
+              customInput={TextField}
+              format="#########"
+
               variant="outlined"
               margin="normal"
               required
@@ -75,6 +78,7 @@ const useStyles = makeStyles(theme => ({
               name="matricula"
               autoComplete="matricula"
               autoFocus
+              onChange={(event) => event.target.value && event.target.value.trim().length === 9 ? setValidator({...validator, matricula: true}) : setValidator({...validator, matricula: false}) }
             />
             <Button
               type="submit"
@@ -82,6 +86,7 @@ const useStyles = makeStyles(theme => ({
               variant="contained"
               color="primary"
               className={classes.submit}
+              disabled={!validator.matricula}
             >
               Recuperar senha
             </Button>

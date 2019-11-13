@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,6 +10,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import NumberFormat from 'react-number-format';
 
 function Copyright() {
   return (
@@ -50,6 +51,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function SignUp() {
+  const [validator, setValidator] = useState({
+    nome: false,
+    matricula: false,
+    curso: false,
+    endereco: false,
+    bairro: false,
+    email: false,
+    password: false,
+    confirma: false
+  });
   const classes = useStyles();
 
   return (
@@ -74,10 +85,14 @@ export default function SignUp() {
                 name="nomeCompleto"
                 autoComplete="nomeCompleto"
                 autoFocus
-              />
+                onChange={(event) => event.target.value ? setValidator({...validator, nome: true}) : setValidator({...validator, nome: false}) }
+                />
             </Grid>
             <Grid item xs={12} sm={3}>
-              <TextField
+            <NumberFormat
+              customInput={TextField}
+              format="#########"
+
                 autoComplete="matricula"
                 name="matricula"
                 variant="outlined"
@@ -85,7 +100,8 @@ export default function SignUp() {
                 fullWidth
                 id="matricula"
                 label="Nº Matrícula"
-              />
+                onChange={(event) => event.target.value && event.target.value.trim().length === 9 ? setValidator({...validator, matricula: true}) : setValidator({...validator, matricula: false}) }
+                />
             </Grid>
             <Grid item xs={12} sm={9}>
               <TextField
@@ -96,6 +112,7 @@ export default function SignUp() {
                 label="Curso"
                 id="curso"
                 autoComplete="curso"
+                onChange={(event) => event.target.value ? setValidator({...validator, curso: true}) : setValidator({...validator, curso: false}) }
               />
             </Grid>
            <Grid item xs={8}>
@@ -103,11 +120,12 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                id="endreco"
+                id="endereco"
                 label="Endereço"
                 name="endereco"
                 autoComplete="endereco"
-              />
+                onChange={(event) => event.target.value ? setValidator({...validator, endereco: true}) : setValidator({...validator, endereco: false}) }
+                />
             </Grid>
             <Grid item xs={4}>
               <TextField
@@ -118,10 +136,14 @@ export default function SignUp() {
                 label="Bairro"
                 name="bairro"
                 autoComplete="bairro"
+                onChange={(event) => event.target.value ? setValidator({...validator, bairro: true}) : setValidator({...validator, bairro: false}) }
               />
             </Grid>
             <Grid item xs={3}>
-              <TextField
+            <NumberFormat
+              customInput={TextField}
+              format="#####-###" mask="_"
+
                 variant="outlined"
                 required
                 fullWidth
@@ -132,14 +154,17 @@ export default function SignUp() {
               />
             </Grid>
             <Grid item xs={3}>
-              <TextField
+            <NumberFormat
+              customInput={TextField}
+              format="(##) #####-####" mask="_"
+
                 variant="outlined"
                 required
                 fullWidth
-                id="telefone"
-                label="Telefone"
-                name="telefone"
-                autoComplete="telefone"
+                id="celular"
+                label="Celular"
+                name="celular"
+                autoComplete="celular"
               />
             </Grid>
            <Grid item xs={6}>
@@ -152,6 +177,7 @@ export default function SignUp() {
                 type="email"
                 name="email"
                 autoComplete="email"
+                onChange={(event) => event.target.value ? setValidator({...validator, email: true}) : setValidator({...validator, email: false}) }
               />
             </Grid>
             <Grid item xs={6}>
@@ -164,6 +190,7 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={(event) => event.target.value ? setValidator({...validator, password: true}) : setValidator({...validator, password: false}) }
               />
             </Grid>
             <Grid item xs={6}>
@@ -175,7 +202,9 @@ export default function SignUp() {
                 label="Confirmação de Senha"
                 type="password"
                 id="confirmPassword"
-                autoComplete="current-password"               />
+                autoComplete="current-password" 
+                onChange={(event) => event.target.value ? setValidator({...validator, confirma: true}) : setValidator({...validator, confirma: false}) }
+              />
             </Grid>
           </Grid>
           <Button
@@ -184,7 +213,11 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
-          >
+            disabled={
+              !validator.nome || !validator.matricula || !validator.curso || !validator.endereco ||
+              !validator.bairro || !validator.email || !validator.password || !validator.confirma
+            }
+            >
             Confirma
           </Button>
           <Grid container justify="flex-end">
