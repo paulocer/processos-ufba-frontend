@@ -143,7 +143,7 @@ export default function ResponsiveDrawer(props) {
         <div className={classes.toolbar} />
         {
 
-          processos.length === 0 ? <Box style={{fontSize:"5vw", marginTop:"20%"}}><div>Nenhum processo foi criado ainda</div></Box> :
+          // processos.length === 0 ? <Box style={{fontSize:"5vw", marginTop:"20%"}}><div>Nenhum processo foi criado ainda</div></Box> :
           processos.map(
             (element, index)=>{
               return <Processo data = {element.data} desc = {element.descricao}/>
