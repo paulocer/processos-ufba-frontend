@@ -18,10 +18,11 @@ import {
 
 import {
   Menu as MenuIcon,
-  Warning as WarningIcon,
   Add as AddIcon,
   History as HistoryIcon,
 } from '@material-ui/icons/'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
 
 import Copyright from '../tail'
 import useStyles from './style'
@@ -37,8 +38,8 @@ export default function ResponsiveDrawer(props) {
     setMobileOpen(!mobileOpen);
   };
 
-  const icons = [<HistoryIcon /> , <AddIcon />, <WarningIcon />, <WarningIcon /> , <WarningIcon /> ]
-  const caminho = ['/home', '#', '/', '/recupera', '/cadastro']
+  const icons = [<HistoryIcon /> , <AddIcon />, <SettingsApplicationsIcon />, <ExitToAppIcon /> ]
+  const caminho = ['/home', '#', '/cadastro', '/', ]
 
   // Modelo de Processo
   const processos = [
@@ -72,7 +73,7 @@ export default function ResponsiveDrawer(props) {
     <div>
       <div className={classes.toolbar} />
       <List>
-        {['Página Inicial', 'Criar Processo', 'Login(teste)', 'Recupera(teste)', 'Cadastro(teste)'].map((text, index) => (
+        {['Página Inicial', 'Criar Processo', 'Alterar Dados', 'Sair',].map((text, index) => (
           //<Link href={index === 0 ? "#" : index === 1 ? "#" : index === 2 ? "#" : index === 3 ? "/" : index === 4 ? "/recupera" : "/cadastro"} className={classes.link}>
           <Link href={caminho[index]} className={classes.link} style={{color:"#000", textDecoration:"none"}}>
             <ListItem button key={text}>
