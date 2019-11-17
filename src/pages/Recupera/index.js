@@ -11,13 +11,36 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import NumberFormat from 'react-number-format';
 
+import history from '../../history';
 import useStyles from './style'
 import Copyright from '../tail';
-
+import api from '../../server/config';
 
 export default function SignIn() {
   const [validator, setValidator] = useState({matricula: false});
   const classes = useStyles();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+      
+    const usuario = {} 
+
+    for (let entry of formData.entries()) {
+        usuario[entry[0]] = entry[1]
+    }  
+
+    try{
+      //realizando um get para efetuar o login
+      await api.get(`/recuperar/matricula/${usuario.matricula}`);
+      alert("Um e-mail foi enviado para a recuperação da senha!");
+      history.push('/');
+      
+    }catch(err){
+      alert(`Houve um erro tentar recuperar a senha, verifique se sua matricula está correta`);
+    }
+
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -29,7 +52,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Recuperação de Senha
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
         <NumberFormat
             customInput={TextField}
             format="#########"

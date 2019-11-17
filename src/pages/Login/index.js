@@ -22,24 +22,24 @@ export default function SignInSide() {
   const classes = useStyles();
 
   const handleSubmit = async (event) => {
-  event.preventDefault();
-  const formData = new FormData(event.target);
-    
-   const usuario = {} 
+    event.preventDefault();
+    const formData = new FormData(event.target);
+      
+    const usuario = {} 
 
-   for (let entry of formData.entries()) {
-       usuario[entry[0]] = entry[1]
-   }  
+    for (let entry of formData.entries()) {
+        usuario[entry[0]] = entry[1]
+    }  
 
-   try{
-    //realiza o post
-    await api.get('/login', {matricula: usuario.matricula, password: usuario.password});
-    alert("Login efetuado com Sucesso!");
-    
-    
-  }catch(err){
-     alert(`Houve um erro ao efetuar o login`);
-  }
+    try{
+      //realizando um get para efetuar o login
+      await api.post('/login', {matricula: usuario.matricula, password: usuario.password});
+      alert("Login efetuado com Sucesso!");
+      
+      
+    }catch(err){
+      alert(`Houve um erro ao efetuar o login`);
+    }
 
   }
   return (

@@ -6,6 +6,7 @@ import Login from './pages/Login'
 import Main from './pages/Main'
 import Cadastro from './pages/Cadastro'
 import Recupera from './pages/Recupera'
+import Reset from './pages/Recupera/Reset'
 
 const Routs = () => {
     return (
@@ -15,6 +16,7 @@ const Routs = () => {
                 <Route path='/home' component={Main} />
                 <Route path='/cadastro' component={Cadastro} />
                 <Route path='/recupera' component={Recupera} />
+                <Route path='/reset/:hash' component={Reset} />
             </Switch>
         </Router>
     )
