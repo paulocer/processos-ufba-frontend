@@ -1,16 +1,20 @@
-import React from 'react';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Popup from "reactjs-popup";
-import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
-import PrintIcon from '@material-ui/icons/Print';
-import EmailIcon from '@material-ui/icons/Email';
+import React from 'react'
+import {
+  Card,
+  CardActions,
+  CardContent,
+  Button,
+  Typography,
+  Link
+} from '@material-ui/core'
+import {
+  PictureAsPdf as PictureAsPdfIcon,
+  Print as PrintIcon,
+  Email as EmailIcon
+} from '@material-ui/icons' 
 
+import Popup from "reactjs-popup"
 import useStyles from './style';
-import { Link } from '@material-ui/core';
 
 export const Processo = {
   objeto: '',
@@ -27,21 +31,23 @@ export default function SimpleCard(props) {
           Data de Criação: {props.data}
         </Typography>
         <Typography className={classes.pos} color="black" gutterBottom>
-          Descrição: {props.desc}
+          Tipo de Requerimento: {props.desc}
         </Typography>
       </CardContent>
-      <CardActions>       
+      <CardActions>
         <Popup modal trigger={<Button size="small">Exportar</Button>}>
-          <p><Button>{<PrintIcon  />}Imprimir</Button></p>
-          <p><Button>{<PictureAsPdfIcon />}  Gerar PDF</Button></p>
-          <p><Button>{<EmailIcon  />}  Receber por email</Button></p>
-        </Popup>        
-        <Link href="#" className={classes.link} style={{color:"#000", textDecoration:"none"}}>
-            <Button size="small">Editar</Button> 
+          <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+            <p><Button>{<PrintIcon />}  Imprimir</Button></p>
+            <p><Button>{<PictureAsPdfIcon />}  Gerar PDF</Button></p>
+            <p><Button>{<EmailIcon />}  Receber por email</Button></p>
+          </div>
+        </Popup>
+        <Link href="#" className={classes.link} style={{ color: "#000", textDecoration: "none" }}>
+          <Button size="small">Editar</Button>
         </Link>
       </CardActions>
     </Card>
-    <br/>
-    </>
+    <br />
+  </>
   );
 }

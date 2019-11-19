@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { 
+import {
   AppBar,
   CssBaseline,
   Drawer,
@@ -20,9 +20,9 @@ import {
   Menu as MenuIcon,
   Add as AddIcon,
   History as HistoryIcon,
+  ExitToApp as ExitToAppIcon,
+  SettingsApplications as SettingsApplicationsIcon,
 } from '@material-ui/icons/'
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
 
 import Copyright from '../tail'
 import useStyles from './style'
@@ -38,33 +38,33 @@ export default function ResponsiveDrawer(props) {
     setMobileOpen(!mobileOpen);
   };
 
-  const icons = [<HistoryIcon /> , <AddIcon />, <SettingsApplicationsIcon />, <ExitToAppIcon /> ]
-  const caminho = ['/home', '#', '/cadastro', '/', ]
+  const icons = [<HistoryIcon />, <AddIcon />, <SettingsApplicationsIcon />, <ExitToAppIcon />]
+  const caminho = ['/home', '/novorequerimento', '/cadastro', '/',]
 
-  // Modelo de Processo
+  // Modelo de Processo Aqui vai ter que pegar os processos que a pessoa já criou
   const processos = [
-  {
-    data: "01/02/2018",
-    descricao: "batata",
-    outrasinfos: "OKAI"
-  },
-  {
-    data: "02/02/2018",
-    descricao: "cenoura",
-    outrasinfos: "OKAI"
-  },
-  {
-    data: "03/02/2018",
-    descricao: "jiló",
-    outrasinfos: "OKAI"
-  },
-  {
-    data: "04/02/2018",
-    descricao: "Não sei mais oq colocar",
-    outrasinfos: "OKAI"
-  }
+    {
+      data: "01/02/2018",
+      descricao: "batata",
+      outrasinfos: "OKAI"
+    },
+    {
+      data: "02/02/2018",
+      descricao: "cenoura",
+      outrasinfos: "OKAI"
+    },
+    {
+      data: "03/02/2018",
+      descricao: "jiló",
+      outrasinfos: "OKAI"
+    },
+    {
+      data: "04/02/2018",
+      descricao: "Não sei mais oq colocar",
+      outrasinfos: "OKAI"
+    }
 
-]
+  ]
 
 
   // 
@@ -73,13 +73,13 @@ export default function ResponsiveDrawer(props) {
     <div>
       <div className={classes.toolbar} />
       <List>
-        {['Página Inicial', 'Criar Processo', 'Alterar Dados', 'Sair',].map((text, index) => (
+        {['Página Inicial', 'Criar Requerimento', 'Alterar Dados', 'Sair',].map((text, index) => (
           //<Link href={index === 0 ? "#" : index === 1 ? "#" : index === 2 ? "#" : index === 3 ? "/" : index === 4 ? "/recupera" : "/cadastro"} className={classes.link}>
-          <Link href={caminho[index]} className={classes.link} style={{color:"#000", textDecoration:"none"}}>
+          <Link href={caminho[index]} className={classes.link} style={{ color: "#000", textDecoration: "none" }}>
             <ListItem button key={text}>
               {/* <ListItemIcon>{index === 0 ? <HomeIcon /> : index === 1 ? <HistoryIcon /> : index === 2 ? <AddIcon /> : <WarningIcon />}</ListItemIcon> */}
               <ListItemIcon>{icons[index]}</ListItemIcon>
-              <ListItemText primary={text}/>
+              <ListItemText primary={text} />
             </ListItem>
           </Link>
         ))}
@@ -146,8 +146,8 @@ export default function ResponsiveDrawer(props) {
 
           // processos.length === 0 ? <Box style={{fontSize:"5vw", marginTop:"20%"}}><div>Nenhum processo foi criado ainda</div></Box> :
           processos.map(
-            (element, index)=>{
-              return <Processo data = {element.data} desc = {element.descricao}/>
+            (element, index) => {
+              return <Processo data={element.data} desc={element.descricao} />
             }
           )
         }
