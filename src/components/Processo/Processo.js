@@ -12,6 +12,11 @@ import EmailIcon from '@material-ui/icons/Email';
 import useStyles from './style';
 import { Link } from '@material-ui/core';
 
+export const Processo = {
+  objeto: '',
+  esclarecimento: ''
+}
+
 export default function SimpleCard(props) {
   const classes = useStyles();
 
