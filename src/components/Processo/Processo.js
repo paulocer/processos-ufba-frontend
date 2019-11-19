@@ -36,7 +36,7 @@ export default function SimpleCard(props) {
       </CardContent>
       <CardActions>
         <Popup modal trigger={<Button size="small">Exportar</Button>}>
-          <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+          <div style={{ display: "flex", flexWrap:"wrap", justifyContent: "space-evenly" }}>
             <p><Button>{<PrintIcon />}  Imprimir</Button></p>
             <p><Button>{<PictureAsPdfIcon />}  Gerar PDF</Button></p>
             <p><Button>{<EmailIcon />}  Receber por email</Button></p>
