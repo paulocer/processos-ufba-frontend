@@ -50,11 +50,9 @@ export default function ResponsiveDrawer(props) {
       const getProcessos = async ()=> {
         const response = await getRequerimentos(state.matricula)
         setProcessos(response)
-        console.log(response);
     }
     getProcessos()
   }, []);
-  console.log(processos)
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);

@@ -26,6 +26,7 @@ export const Requerimento = {
   matricula: '', 
   objeto: '',
   outro: '',
+  data: '',
   esclarecimento: ''
 }
 

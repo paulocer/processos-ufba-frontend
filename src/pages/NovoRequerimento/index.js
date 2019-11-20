@@ -57,7 +57,7 @@ export default function NovoProcesso(props) {
   }
   
   const [requerimento, setRequerimento] = useState({ ...Requerimento, matricula: state.matricula });
-  const validate = (requerimento.esclarecimento === '' || (requerimento.objeto ==='' && requerimento.outro === ''));
+  const validate = (requerimento.data === '' || requerimento.esclarecimento === '' || (requerimento.objeto ==='' && requerimento.outro === ''));
 
     
   //Efetua o cadastro realizando um post na api
@@ -177,12 +177,14 @@ function StyledRadio(props) {
       <form className={classes.form} noValidate onSubmit= {handleSubmit}>
       <h2 component="legend">Data</h2>
           <TextField
+            value = {requerimento.data}
             id="date"
             type="date"
-            className={classes.textField}
+            className={classes.textField}            
             InputLabelProps={{
               shrink: true,
             }}
+            onChange={(e) => setRequerimento({...requerimento, data: e.target.value}) }
           />
           <Grid container spacing={1}>
           <FormControl component="fieldset">
