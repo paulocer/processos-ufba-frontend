@@ -10,15 +10,31 @@ import {
 import {
   PictureAsPdf as PictureAsPdfIcon,
   Print as PrintIcon,
-  Email as EmailIcon
+  Email as EmailIcon,
 } from '@material-ui/icons' 
 
 import Popup from "reactjs-popup"
 import useStyles from './style';
+import api from '../../server/config'
 
-export const Processo = {
+
+export const Requerimento = {
+  matricula: '', 
   objeto: '',
+  outro: '',
   esclarecimento: ''
+}
+
+export async function getRequerimentos(matricula){
+  if(matricula){
+    try{
+      const response =  await api.post('/requerimentos', {matricula: matricula});
+      return response.data;
+
+    }catch(error){
+      return;
+    }
+  }
 }
 
 export default function SimpleCard(props) {

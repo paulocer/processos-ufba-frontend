@@ -1,3 +1,5 @@
+import history from '../../history';    
+
 export const Usuario = {
     nomeCompleto: '',
     matricula: '',
@@ -22,5 +24,12 @@ export const Usuario = {
 
 export function getUserLogged(){}
 
-export function isUserLogged(){}
+export function isUserLogged(state){
+    if(!state || !state.matricula ||state.matricula === ''){
+        alert('É necessário fazer login para continuar');   
+        history.push('/')
+        return false;    
+    }
+    return true;
+}
 

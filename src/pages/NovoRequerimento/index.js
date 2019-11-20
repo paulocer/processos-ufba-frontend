@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
+import {Link} from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -18,33 +18,35 @@ import history from '../../history';
 import Copyright from '../tail';
 import useStyles from './style';
 import api from '../../server/config'
+import {Requerimento} from '../../components/Processo/Processo'
+import {isUserLogged} from '../../components/Usuario/Usuario'
 
 
-export default function NovoProcesso() {
-  const classes = useStyles();
+export default function NovoProcesso(props) {  
+  var { state } = props.location;  
+  const classes = useStyles();  
+  // Valida se o usuário está logado
+  if(!isUserLogged(state)){
+    // Usado para evitar erro ao tentar recuperar a matricula
+    state = {matricula: ''};
+  }
 
-  const [validator, setValidator] = useState({
-    objeto: false,
-    outro: false,
-    esclarecimentos: false
-  });
+  const [requerimento, setRequerimento] = useState({ ...Requerimento, matricula: state.matricula });
+  const validate = (requerimento.esclarecimento === '' || (requerimento.objeto ==='' && requerimento.outro === ''));
 
+    
   //Efetua o cadastro realizando um post na api
    const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
     
-   const requerimento = {} 
-
-   for (let entry of formData.entries()) {
-      requerimento[entry[0]] = entry[1]
-   }  
    try{
      //realiza o post
      await api.post('/requerimento', {requerimento: requerimento});
      alert("Requerimento realizado com Sucesso!");
      //retorna para a home
-     history.push('/');
+     history.push({
+       pathname:'/home',
+       state: state});
    }catch(err){
       alert(`Houve um erro ao efetuar o cadastro do requerimento`);
    }       
@@ -79,7 +81,7 @@ function StyledRadio(props) {
           <Grid container spacing={1}>
           <FormControl component="fieldset">
             <h2 component="legend">Objeto do Requerimento</h2>
-            <RadioGroup defaultValue="Aproveitamento de estudos" aria-label="requerimento" name="customized-radios" onChange={(event) => event.target.value ? setValidator({...validator, objeto: true}) : setValidator({...validator, objeto: false}) }>
+            <RadioGroup defaultValue="Aproveitamento de estudos" aria-label="requerimento" name="customized-radios" onChange={(e) => setRequerimento({...requerimento, objeto: e.target.value}) }>
               <FormControlLabel value="Aproveitamento de estudos" control={<StyledRadio />} label="Aproveitamento de estudos" />
               <FormControlLabel value="Desistência definitiva de curso" control={<StyledRadio />} label="Desistência definitiva de curso" />
               <FormControlLabel value="Dilatação do prazo máximo para conclusão do curso" control={<StyledRadio />} label="Dilatação do prazo máximo para conclusão do curso" />
@@ -92,10 +94,8 @@ function StyledRadio(props) {
               <FormControlLabel value="Trancamento por tempo determinado" control={<StyledRadio />} label="Trancamento por tempo determinado" />
               <FormControlLabel value="Outro" control={<StyledRadio />} label="Outro" />
               <Grid item xs={6}>
-                <TextField
-                  customInput={TextField}
-                  format="#########"
-
+                <TextField   
+                    value = {requerimento.outro}
                     autoComplete="outro"
                     name="outro"
                     variant="outlined"
@@ -103,7 +103,7 @@ function StyledRadio(props) {
                     fullWidth
                     id="outro"
                     label=""
-                    onChange={(event) => event.target.value ? setValidator({...validator, outro: true}) : setValidator({...validator, outro: false}) }
+                    onChange={(e) => setRequerimento({...requerimento, outro: e.target.value}) }
                     />
             </Grid>
               
@@ -113,6 +113,7 @@ function StyledRadio(props) {
             <Grid item xs={6}>
             <h2 component="legend">Esclarecimentos</h2>
               <TextField
+                value = {requerimento.esclarecimento}
                 variant="outlined"
                 required
                 fullWidth
@@ -120,8 +121,9 @@ function StyledRadio(props) {
                 label=""
                 type="esclarecimentos"
                 id="esclarecimentos"
+                multiline
                 autoComplete="" 
-                onChange={(event) => event.target.value ? setValidator({...validator, esclarecimentos: true}) : setValidator({...validator, esclarecimentos: false}) }
+                onChange={(e) => setRequerimento({...requerimento, esclarecimento: e.target.value}) }
               />
             </Grid>
           </Grid>
@@ -131,7 +133,7 @@ function StyledRadio(props) {
             variant="contained"
             color="primary"
             className={classes.submit}
-            disabled={!validator.esclarecimentos|| !validator.objeto}
+            disabled={validate}
             >
             Confirma
           </Button>

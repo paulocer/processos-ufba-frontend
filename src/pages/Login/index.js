@@ -13,6 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import NumberFormat from 'react-number-format';
 
+import history from '../../history';
 import useStyles from './style';
 import Copyright from '../tail';
 import api from '../../server/config'
@@ -35,7 +36,12 @@ export default function SignInSide() {
       //realizando um get para efetuar o login
       await api.post('/login', {matricula: usuario.matricula, password: usuario.password});
       alert("Login efetuado com Sucesso!");
-      
+      history.push({
+        pathname: '/home',
+        state:{
+            matricula: usuario.matricula
+          }
+      });
       
     }catch(err){
       alert(`Houve um erro ao efetuar o login`);
@@ -83,10 +89,10 @@ export default function SignInSide() {
               autoComplete="current-password"
               onChange={(event) => event.target.value ? setValidator({...validator, password: true}) : setValidator({...validator, password: false}) }
             />
-            <FormControlLabel
+           <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Mantenha-me conectado."
-            />
+            /> 
             <Button
               type="submit"
               fullWidth

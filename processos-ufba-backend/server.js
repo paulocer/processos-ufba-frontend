@@ -62,6 +62,29 @@ app.post('/login', (req, res)=>{
 
 });
 
+app.post('/requerimento', (req, res)=>{
+    console.log(req.body);
+    db.collection('requerimento').save(req.body.requerimento, (err, result) => {
+        if (err) return res.status(500).send('Ocorreu um erro');
+        res.send('Salvo no Banco de Dados');
+        console.log('Salvo no Banco de Dados')
+    });
+});
+
+app.post('/requerimentos', (req, res)=>{
+    console.log(req.body);
+    db.collection('requerimento').find({matricula: req.body.matricula}).toArray((err, result)=>{
+        if (err)return res.status(500).send('Ocorreu um erro'); 
+        if(result) {
+            console.log(result);
+          return  res.send(result);
+        }else{
+          return res.status(404).send('Não encontrado');
+        }
+    }); 
+});
+
+
 // Rota utilizada para recuperação de senha do usuário
 app.get('/recuperar/matricula/:matricula',(req, res)=>{
     db.collection('user').findOne({matricula: req.params.matricula}, (err, result)=>{

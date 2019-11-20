@@ -13,7 +13,6 @@ import {
   Typography,
   useTheme,
   Box,
-  Link,
 } from '@material-ui/core/'
 
 import {
@@ -23,48 +22,40 @@ import {
   ExitToApp as ExitToAppIcon,
   SettingsApplications as SettingsApplicationsIcon,
 } from '@material-ui/icons/'
+import {Link} from 'react-router-dom'
 
 import Copyright from '../tail'
 import useStyles from './style'
 import Processo from '../../components/Processo/Processo.js'
+import {getRequerimentos} from '../../components/Processo/Processo.js'
+import {isUserLogged} from '../../components/Usuario/Usuario'
 
 export default function ResponsiveDrawer(props) {
+  var { state } = props.location;
   const { container } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
-
+  
+  // Verifica se o usuario está logado
+  if(!isUserLogged(state)){
+    // Usado para evitar erro ao tentar recuperar a matricula
+    state = {matricula: ''};
+  }
+    
+  var processos = []
+  // Recupera os processos em utilizando promise
+  getRequerimentos(state.matricula).then((x) => processos = x);
+  
+  console.log(processos);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
   const icons = [<HistoryIcon />, <AddIcon />, <SettingsApplicationsIcon />, <ExitToAppIcon />]
-  const caminho = ['/home', '/novorequerimento', '/cadastro', '/',]
+  const caminho = [{ pathname: '/home', state: state }, { pathname: '/novorequerimento', state: state }, { pathname:'/cadastro', state: state }, { pathname:'/'}]
 
-  // Modelo de Processo Aqui vai ter que pegar os processos que a pessoa já criou
-  const processos = [
-    {
-      data: "01/02/2018",
-      descricao: "batata",
-      outrasinfos: "OKAI"
-    },
-    {
-      data: "02/02/2018",
-      descricao: "cenoura",
-      outrasinfos: "OKAI"
-    },
-    {
-      data: "03/02/2018",
-      descricao: "jiló",
-      outrasinfos: "OKAI"
-    },
-    {
-      data: "04/02/2018",
-      descricao: "Não sei mais oq colocar",
-      outrasinfos: "OKAI"
-    }
-
-  ]
+ 
 
 
   // 
@@ -75,7 +66,7 @@ export default function ResponsiveDrawer(props) {
       <List>
         {['Página Inicial', 'Criar Requerimento', 'Alterar Dados', 'Sair',].map((text, index) => (
           //<Link href={index === 0 ? "#" : index === 1 ? "#" : index === 2 ? "#" : index === 3 ? "/" : index === 4 ? "/recupera" : "/cadastro"} className={classes.link}>
-          <Link href={caminho[index]} className={classes.link} style={{ color: "#000", textDecoration: "none" }}>
+          <Link to={caminho[index]} className={classes.link} style={{ color: "#000", textDecoration: "none" }}>
             <ListItem button key={text}>
               {/* <ListItemIcon>{index === 0 ? <HomeIcon /> : index === 1 ? <HistoryIcon /> : index === 2 ? <AddIcon /> : <WarningIcon />}</ListItemIcon> */}
               <ListItemIcon>{icons[index]}</ListItemIcon>
