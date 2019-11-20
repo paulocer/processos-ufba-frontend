@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   AppBar,
   CssBaseline,
@@ -36,18 +36,26 @@ export default function ResponsiveDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [processos, setProcessos] = useState([]);
   
   // Verifica se o usuario está logado
   if(!isUserLogged(state)){
     // Usado para evitar erro ao tentar recuperar a matricula
     state = {matricula: ''};
   }
-    
-  var processos = []
-  // Recupera os processos em utilizando promise
-  getRequerimentos(state.matricula).then((x) => processos = x);
   
-  console.log(processos);
+
+  // Recupera os processos em utilizando promise
+    useEffect(()=>{
+      const getProcessos = async ()=> {
+        const response = await getRequerimentos(state.matricula)
+        setProcessos(response)
+        console.log(response);
+    }
+    getProcessos()
+  }, []);
+  console.log(processos)
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -138,7 +146,7 @@ export default function ResponsiveDrawer(props) {
           // processos.length === 0 ? <Box style={{fontSize:"5vw", marginTop:"20%"}}><div>Nenhum processo foi criado ainda</div></Box> :
           processos.map(
             (element, index) => {
-              return <Processo data={element.data} desc={element.descricao} />
+              return <Processo data={element.data} desc={element.objeto} />
             }
           )
         }
