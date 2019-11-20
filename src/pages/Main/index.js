@@ -105,7 +105,7 @@ export default function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Página Inicial
+            REQUERIMENTOS
           </Typography>
         </Toolbar>
       </AppBar>
