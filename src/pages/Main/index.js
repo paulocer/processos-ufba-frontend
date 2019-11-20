@@ -73,7 +73,7 @@ export default function ResponsiveDrawer(props) {
     <div>
       <div className={classes.toolbar} />
       <List>
-        {['Página Inicial', 'Criar Requerimento', 'Alterar Dados', 'Sair',].map((text, index) => (
+        {['Página Inicial', 'Novo Requerimento', 'Alteração Cadastral', 'Sair'].map((text, index) => (
           //<Link href={index === 0 ? "#" : index === 1 ? "#" : index === 2 ? "#" : index === 3 ? "/" : index === 4 ? "/recupera" : "/cadastro"} className={classes.link}>
           <Link href={caminho[index]} className={classes.link} style={{ color: "#000", textDecoration: "none" }}>
             <ListItem button key={text}>
