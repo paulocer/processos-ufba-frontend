@@ -78,6 +78,15 @@ function StyledRadio(props) {
           NOVO REQUERIMENTO
         </Typography>
         <form className={classes.form} noValidate onSubmit= {handleSubmit}>
+        <h2 component="legend">Data</h2>
+          <TextField
+            id="date"
+            type="date"
+            className={classes.textField}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
           <Grid container spacing={1}>
           <FormControl component="fieldset">
             <h2 component="legend">Objeto do Requerimento</h2>
