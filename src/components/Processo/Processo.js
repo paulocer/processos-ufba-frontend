@@ -8,10 +8,14 @@ import {
   Link
 } from '@material-ui/core'
 import {
-  PictureAsPdf as PictureAsPdfIcon,
-  Print as PrintIcon,
-  Email as EmailIcon,
-} from '@material-ui/icons' 
+  PictureAsPdf,
+  Print,
+  Email
+} from '@material-ui/icons';
+import DeleteForeverIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import FileCopyIcon from '@material-ui/icons/FileCopy';
+import ShareIcon from '@material-ui/icons/Share';
 
 import Popup from "reactjs-popup"
 import useStyles from './style';
@@ -44,23 +48,30 @@ export default function SimpleCard(props) {
     <Card className={classes.card}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Data de Criação: {props.data}
+          Data: {props.data}
         </Typography>
         <Typography className={classes.pos} color="black" gutterBottom>
-          Tipo de Requerimento: {props.desc}
+          Objeto do Requerimento: {props.desc}
         </Typography>
       </CardContent>
       <CardActions>
-        <Popup modal trigger={<Button size="small">Exportar</Button>}>
-          <div style={{ display: "flex", flexWrap:"wrap", justifyContent: "space-evenly" }}>
-            <p><Button>{<PrintIcon />}  Imprimir</Button></p>
-            <p><Button>{<PictureAsPdfIcon />}  Gerar PDF</Button></p>
-            <p><Button>{<EmailIcon />}  Receber por email</Button></p>
+        <Popup modal trigger={<Button size="small">{<ShareIcon />}Compartilhar</Button>}>
+          <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+            <p><Button>{<Print />}  Impressora</Button></p>
+            <p><Button>{<PictureAsPdf />}  Gerar PDF</Button></p>
+            <p><Button>{<Email />}  Enviar email</Button></p>
           </div>
         </Popup>
         <Link href="#" className={classes.link} style={{ color: "#000", textDecoration: "none" }}>
-          <Button size="small">Editar</Button>
+          <Button size="small">{<EditIcon />}Editar</Button>
         </Link>
+        <Link href="#" className={classes.link} style={{ color: "#000", textDecoration: "none" }}>
+          <Button size="small">{<FileCopyIcon />}Clonar</Button>
+        </Link>
+        <Link href="#" className={classes.link} style={{ color: "#000", textDecoration: "none" }}>
+          <Button size="small">{<DeleteForeverIcon />}Excluir</Button>
+        </Link>
+        
       </CardActions>
     </Card>
     <br />
