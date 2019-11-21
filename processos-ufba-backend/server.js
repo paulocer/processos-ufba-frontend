@@ -177,7 +177,7 @@ app.post('/recupera/requerimento',(req, res)=>{
             console.log("recuperar",result);
           return  res.send({result});
         }else{
-          return res.status(404).send('Não Caralho');
+          return res.status(404).send('Não encontrado');
         }
     }); 
 });

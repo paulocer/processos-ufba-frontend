@@ -107,7 +107,7 @@ export default function SimpleCard(props) {
           className={classes.link} 
           style={{ color: "#000", textDecoration: "none" }}
           onClick={(e) => {editRequerimento(props.id, props.inheritProps)}}>
-          {<DeleteForeverIcon />}Clonar</Button>
+          {<FileCopyIcon />}Clonar</Button>
           <Button 
           size="small"         
           className={classes.link} 
