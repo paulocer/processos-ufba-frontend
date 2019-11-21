@@ -29,3 +29,5 @@ const MyDocument = () => (
         </Document>
     </PDFViewer>
 );
+
+export default MyDocument;
