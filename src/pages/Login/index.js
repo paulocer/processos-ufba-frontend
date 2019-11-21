@@ -35,7 +35,7 @@ export default function SignInSide() {
     try{
       //realizando um get para efetuar o login
       await api.post('/login', {matricula: usuario.matricula, password: usuario.password});
-      alert("Login efetuado com Sucesso!");
+      //alert("Login efetuado com Sucesso!");
       history.push({
         pathname: '/home',
         state:{
