@@ -59,7 +59,6 @@ export async function getRequerimento(id){
       const response =  await api.post('/recupera/requerimento', {id: id});
       delete response.data.result._id;
       return response.data.result;
-
     }catch(error){
       return;
     }

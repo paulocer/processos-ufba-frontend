@@ -67,8 +67,10 @@ export default function NovoProcesso(props) {
       const response = await getRequerimento(state.idRequerimento);
       setRequerimento(response)
   }
-    if(isUpdate)
+    if(isUpdate){
           getReq()
+         delete state.idRequerimento;
+      }
     }, [state.idRequerimento]); 
   
   console.log(requerimento);

@@ -29,8 +29,7 @@ export default function SignUp(props) {
   const validatePassword = (usuario.password !== '' && validator.confirmPassword !== '') && (usuario.password === validator.confirmPassword);
 
   const isUpdate = state && state.matricula && state.matricula !== '' ;
- 
-  useEffect(()=>{
+    useEffect(()=>{
       const getUsuario = async ()=> {
         const response = await getUserLogged(state.matricula)
         setUsuario(response)
@@ -75,6 +74,26 @@ export default function SignUp(props) {
     }  
 
   }
+
+  const logIn = 
+    <Grid container justify="flex-end">
+      <Grid item>
+        <Link href="/" variant="body2" >
+          Já tem cadastro? Faça o login.
+       </Link>
+    </Grid>
+  </Grid> ;
+
+  const buttonVoltar = <Button          
+  fullWidth
+  variant="contained"
+  color="primary"
+  className={classes.submit}  
+  onClick = {(e) => {history.go(-1)}}        
+  >
+  Voltar
+    </Button>
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -244,15 +263,9 @@ export default function SignUp(props) {
             disabled={validate || !validatePassword || !emailValidate(usuario.email)}
             >
             Confirma
-          </Button>
-
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link href="/" variant="body2" >
-                Já tem cadastro? Faça o login.
-              </Link>
-            </Grid>
-          </Grid>
+          </Button>        
+          {isUpdate? buttonVoltar: logIn}
+          
         </form>
       </div>
       <Box mt={5}>
