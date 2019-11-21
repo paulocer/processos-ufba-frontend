@@ -211,6 +211,9 @@ function StyledRadio(props) {
                   variant="outlined"
                   required
                   fullWidth
+                  multiline
+                  rows="2"
+                  rowsMax="2"
                   id="outro"
                   label=""
                   onChange={(e) => setRequerimento({...requerimento, outro: e.target.value}) }
@@ -243,6 +246,8 @@ function StyledRadio(props) {
                   type="esclarecimentos"
                   id="esclarecimentos"
                   multiline
+                  rows="13"
+                  rowsMax="13"
                   autoComplete="" 
                   onChange={(e) => setRequerimento({...requerimento, esclarecimento: e.target.value}) }
                 />
