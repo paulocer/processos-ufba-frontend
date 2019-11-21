@@ -125,17 +125,17 @@ export default function SignUp(props) {
             <NumberFormat
               customInput={TextField}
               format="#########"
-
-                autoComplete="matricula"
-                name="matricula"
-                variant="outlined"
-                required
-                fullWidth
-                value={usuario.matricula}
-                id="matricula"
-                label="Nº Matrícula"
-                onChange={(e) => setUsuario({...usuario, matricula: e.target.value}) }
-                />
+              autoComplete="matricula"
+              name="matricula"
+              variant="outlined"
+              disabled={isUpdate ? true : false}
+              required
+              fullWidth
+              value={usuario.matricula}
+              id="matricula"
+              label="Nº Matrícula"
+              onChange={(e) => setUsuario({...usuario, matricula: e.target.value}) }
+              />
             </Grid>
             <Grid item xs={12} sm={9}>
               <TextField
