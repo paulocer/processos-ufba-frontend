@@ -43,8 +43,6 @@ export default function ResponsiveDrawer(props) {
     // Usado para evitar erro ao tentar recuperar a matricula
     state = {matricula: ''};
   }
-  
-
   // Recupera os processos em utilizando promise
     useEffect(()=>{
       const getProcessos = async ()=> {
@@ -52,7 +50,7 @@ export default function ResponsiveDrawer(props) {
         setProcessos(response)
     }
     getProcessos()
-  }, []);
+  }, [state.matricula]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -61,18 +59,13 @@ export default function ResponsiveDrawer(props) {
   const icons = [<HistoryIcon />, <AddIcon />, <SettingsApplicationsIcon />, <ExitToAppIcon />]
   const caminho = [{ pathname: '/home', state: state }, { pathname: '/novorequerimento', state: state }, { pathname:'/cadastro', state: state }, { pathname:'/'}]
 
- 
-
-
-  // 
-
-  const drawer = (
+   const drawer = (
     <div>
       <div className={classes.toolbar} />
       <List>
         {['Requerimentos', 'Novo Requerimento', 'Alteração Cadastral', 'Sair'].map((text, index) => (
           //<Link href={index === 0 ? "#" : index === 1 ? "#" : index === 2 ? "#" : index === 3 ? "/" : index === 4 ? "/recupera" : "/cadastro"} className={classes.link}>
-          <Link to={caminho[index]} className={classes.link} style={{ color: "#000", textDecoration: "none" }}>
+          <Link key={index} to={caminho[index]} className={classes.link} style={{ color: "#000", textDecoration: "none" }}>
             <ListItem button key={text}>
               {/* <ListItemIcon>{index === 0 ? <HomeIcon /> : index === 1 ? <HistoryIcon /> : index === 2 ? <AddIcon /> : <WarningIcon />}</ListItemIcon> */}
               <ListItemIcon>{icons[index]}</ListItemIcon>
@@ -144,7 +137,7 @@ export default function ResponsiveDrawer(props) {
           // processos.length === 0 ? <Box style={{fontSize:"5vw", marginTop:"20%"}}><div>Nenhum processo foi criado ainda</div></Box> :
           processos.map(
             (element, index) => {
-              return <Processo data={element.data} desc={element.objeto} />
+              return <Processo key={index} id={element._id}  data={element.data} desc={element.objeto} />
             }
           )
         }
