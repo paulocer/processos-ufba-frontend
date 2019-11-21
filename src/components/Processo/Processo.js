@@ -42,6 +42,31 @@ async function removeRequerimento(id){
     }
   }
 }
+
+function editRequerimento(id, inheritProps){
+  inheritProps.location.state.idRequerimento = id;
+  history.push({
+    pathname: '/novorequerimento',
+    state: inheritProps.location.state
+  })
+
+
+}
+
+export async function getRequerimento(id){
+  if(id){
+    try{
+      const response =  await api.post('/recupera/requerimento', {id: id});
+      delete response.data.result._id;
+      return response.data.result;
+    }catch(error){
+      return;
+    }
+  }
+
+}
+
+
 export async function getRequerimentos(matricula){
   if(matricula){
     try{
@@ -56,6 +81,7 @@ export async function getRequerimentos(matricula){
 
 export default function SimpleCard(props) {
   const classes = useStyles();
+  console.log(props);
 
   return (<>
     <Card className={classes.card}>
@@ -76,15 +102,14 @@ export default function SimpleCard(props) {
           </div>
         </Popup>
         
-        <Link href="#" className={classes.link} style={{ color: "#000", textDecoration: "none" }}>
-          <Button size="small">{<EditIcon />}Editar</Button>
-        </Link>
-        <Link href="#" className={classes.link} style={{ color: "#000", textDecoration: "none" }}>
-          <Button size="small">{<FileCopyIcon />}Clonar</Button>
-        </Link> 
+         <Button 
+          size="small"         
+          className={classes.link} 
+          style={{ color: "#000", textDecoration: "none" }}
+          onClick={(e) => {editRequerimento(props.id, props.inheritProps)}}>
+          {<FileCopyIcon />}Clonar</Button>
           <Button 
-          size="small" 
-          type = "submit"
+          size="small"         
           className={classes.link} 
           style={{ color: "#000", textDecoration: "none" }}
           onClick={(e) => {removeRequerimento(props.id)}}>

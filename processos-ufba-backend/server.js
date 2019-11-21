@@ -3,8 +3,9 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const MongoClient = require('mongodb').MongoClient;
+const mongodb = require('mongodb');
 const enviarEmail = require("./email");
-const uri ="mongodb+srv://<login>:<senha>@processosufba-u7vte.mongodb.net/test?retryWrites=true&w=majority"
+const uri ="mongodb+srv://acessobanco:YPJwWjRa4tgynAkX@processosufba-u7vte.mongodb.net/test?retryWrites=true&w=majority"
 
 MongoClient.connect(uri, (err, client) => {
     if (err) return console.log(err);
@@ -49,6 +50,30 @@ app.post('/cadastro', (req, res) => {
     });
 });
 
+// Rota utilizada para atualizar os dados do usuário no banco
+app.put('/cadastro', (req, res) => {
+    console.log(req.body);
+    db.collection('user').updateOne({matricula: req.body.usuario.matricula},{$set: req.body.usuario}, (err, result) => {
+        if (err) {console.log(err); return res.status(500).send('Ocorreu um erro');}
+        res.send('Salvo no Banco de Dados');
+        console.log('Salvo no Banco de Dados');
+    });
+});
+
+// Rota utilizada para recuperar um usuario do banco
+app.post('/recupera/usuario',(req, res)=>{
+    db.collection('user').findOne({matricula: req.body.matricula},(err, result)=>{
+        if (err)return res.status(500).send('Ocorreu um erro'); 
+        if(result) {
+            delete result._id;
+            console.log(result);
+          return  res.send({...result, password: ''});
+        }else{
+          return res.status(404).send('Não encontrado');
+        }
+    }); 
+});
+
 // Rota utilizada para realizar o login do usuário
 app.post('/login', (req, res)=>{
     db.collection('user').findOne({matricula: req.body.matricula, password: req.body.password}, (err, result)=>{
@@ -61,29 +86,6 @@ app.post('/login', (req, res)=>{
     }); 
 
 });
-
-app.post('/requerimento', (req, res)=>{
-    console.log(req.body);
-    db.collection('requerimento').save(req.body.requerimento, (err, result) => {
-        if (err) return res.status(500).send('Ocorreu um erro');
-        res.send('Salvo no Banco de Dados');
-        console.log('Salvo no Banco de Dados')
-    });
-});
-
-app.post('/requerimentos', (req, res)=>{
-    console.log(req.body);
-    db.collection('requerimento').find({matricula: req.body.matricula}).toArray((err, result)=>{
-        if (err)return res.status(500).send('Ocorreu um erro'); 
-        if(result) {
-            console.log(result);
-          return  res.send(result);
-        }else{
-          return res.status(404).send('Não encontrado');
-        }
-    }); 
-});
-
 
 // Rota utilizada para recuperação de senha do usuário
 app.get('/recuperar/matricula/:matricula',(req, res)=>{
@@ -137,9 +139,64 @@ app.post('/recuperar/:hash', (req, res)=>{
     })
 });
 
-app.get('/rec', (req, res)=>{
-   
+// Adiciona um requerimento
+app.post('/requerimento', (req, res)=>{
+    console.log(req.body);
+    db.collection('requerimento').save(req.body.requerimento, (err, result) => {
+        if (err) return res.status(500).send('Ocorreu um erro');
+        res.send('Salvo no Banco de Dados');
+        console.log('Salvo no Banco de Dados')
+    });
 });
+
+//Altera um requerimento
+app.put('/requerimento', (req, res) => {
+    db.collection('requerimento').updateOne({_id: req.body.requerimento._id}, req.body.requerimento, (err, result) => {
+        if (err) return res.status(500).send('Ocorreu um erro');
+        res.send('Salvo no Banco de Dados');
+        console.log(req.body.requerimento);
+        console.log('Salvo no Banco de Dados');
+    });
+});
+
+
+// Apaga um requerimento
+app.delete('/requerimento', (req, res) => {
+    db.collection('requerimento').deleteOne({_id: new mongodb.ObjectID(req.body.id)}, (err, result) => {
+        if (err) return res.status(500).send('Ocorreu um erro');
+        res.send('Salvo no Banco de Dados');
+        console.log('Salvo no Banco de Dados');
+    });
+});
+
+//Recupera um requerimento pelo seu id
+app.post('/recupera/requerimento',(req, res)=>{
+    db.collection('requerimento').findOne({_id:new mongodb.ObjectID(req.body.id)},(err, result)=>{
+        if (err) {console.log(err); return res.status(500).send('Ocorreu um erro')}; 
+        if(result) {
+            console.log("recuperar",result);
+          return  res.send({result});
+        }else{
+          return res.status(404).send('Não encontrado');
+        }
+    }); 
+});
+
+
+// Recupera todos os requerimentos do usuario
+app.post('/requerimentos', (req, res)=>{
+    console.log(req);
+    db.collection('requerimento').find({matricula: req.body.matricula}).toArray((err, result)=>{
+        if (err) return res.status(500).send('Ocorreu um erro');
+        if(result) {
+            console.log(result);
+          return  res.send(result);
+        }else{
+          return res.status(404).send('Não encontrado');
+        }
+    }); 
+});
+
 
 var port = process.env.PORT || 5000;
 // set port
