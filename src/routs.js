@@ -8,6 +8,7 @@ import Cadastro from './pages/Cadastro'
 import Recupera from './pages/Recupera'
 import Reset from './pages/Recupera/Reset'
 import NovoProcesso from './pages/NovoRequerimento'
+import Pdf from './pages/Pdf'
 
 const Routs = () => {
     return (
@@ -19,6 +20,7 @@ const Routs = () => {
                 <Route path='/novorequerimento' component={NovoProcesso} />
                 <Route path='/recupera' component={Recupera} />
                 <Route path='/reset/:hash' component={Reset} />
+                <Route path='/pdf' component={Pdf} />
             </Switch>
         </Router>
     )

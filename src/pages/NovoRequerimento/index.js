@@ -174,78 +174,81 @@ function StyledRadio(props) {
         </Hidden>
       </nav>
       <main className={classes.content}>
-      <form className={classes.form} noValidate onSubmit= {handleSubmit}>
-      <h2 component="legend">Data</h2>
-          <TextField
-            value = {requerimento.data}
-            id="date"
-            type="date"
-            className={classes.textField}            
-            InputLabelProps={{
-              shrink: true,
-            }}
-            onChange={(e) => setRequerimento({...requerimento, data: e.target.value}) }
-          />
+        <form className={classes.form} noValidate onSubmit= {handleSubmit}>
           <Grid container spacing={1}>
-          <FormControl component="fieldset">
-            <h2 component="legend">Objeto do Requerimento</h2>
-            <RadioGroup defaultValue="Aproveitamento de estudos" aria-label="requerimento" name="customized-radios" onChange={(e) => setRequerimento({...requerimento, objeto: e.target.value}) }>
-              <FormControlLabel value="Aproveitamento de estudos" control={<StyledRadio />} label="Aproveitamento de estudos" />
-              <FormControlLabel value="Desistência definitiva de curso" control={<StyledRadio />} label="Desistência definitiva de curso" />
-              <FormControlLabel value="Dilatação do prazo máximo para conclusão do curso" control={<StyledRadio />} label="Dilatação do prazo máximo para conclusão do curso" />
-              <FormControlLabel value="Dispensa de pré-requisito" control={<StyledRadio />} label="Dispensa de pré-requisito" />
-              <FormControlLabel value="Permanência no curso" control={<StyledRadio />} label="Permanência no curso" />
-              <FormControlLabel value="Reconsideração de despacho/Recurso" control={<StyledRadio />} label="Reconsideração de despacho/Recurso" />
-              <FormControlLabel value="Retificação de histórico" control={<StyledRadio />} label="Retificação de histórico" />
-              <FormControlLabel value="Trancamento parcial de inscrição em disciplinas" control={<StyledRadio />} label="Trancamento parcial de inscrição em disciplinas" />
-              <FormControlLabel value="Trancamento total de inscrição em disciplinas (semestre corrente)" control={<StyledRadio />} label="Trancamento total de inscrição em disciplinas (semestre corrente)" />
-              <FormControlLabel value="Trancamento por tempo determinado" control={<StyledRadio />} label="Trancamento por tempo determinado" />
-              <FormControlLabel value="Outro" control={<StyledRadio />} label="Outro" />
-              <Grid item xs={6}>
+            
+            <Grid item xs>
+              <FormControl component="fieldset">
+                <h2 component="legend">Objeto do Requerimento</h2>
+                <RadioGroup aria-label="requerimento" name="customized-radios" onChange={(e) => setRequerimento({...requerimento, objeto: e.target.value}) }>
+                  <FormControlLabel value="Aproveitamento de estudos" control={<StyledRadio />} label="Aproveitamento de estudos" />
+                  <FormControlLabel value="Desistência definitiva de curso" control={<StyledRadio />} label="Desistência definitiva de curso" />
+                  <FormControlLabel value="Dilatação do prazo máximo para conclusão do curso" control={<StyledRadio />} label="Dilatação do prazo máximo para conclusão do curso" />
+                  <FormControlLabel value="Dispensa de pré-requisito" control={<StyledRadio />} label="Dispensa de pré-requisito" />
+                  <FormControlLabel value="Permanência no curso" control={<StyledRadio />} label="Permanência no curso" />
+                  <FormControlLabel value="Reconsideração de despacho/Recurso" control={<StyledRadio />} label="Reconsideração de despacho/Recurso" />
+                  <FormControlLabel value="Retificação de histórico" control={<StyledRadio />} label="Retificação de histórico" />
+                  <FormControlLabel value="Trancamento parcial de inscrição em disciplinas" control={<StyledRadio />} label="Trancamento parcial de inscrição em disciplinas" />
+                  <FormControlLabel value="Trancamento total de inscrição em disciplinas (semestre corrente)" control={<StyledRadio />} label="Trancamento total de inscrição em disciplinas (semestre corrente)" />
+                  <FormControlLabel value="Trancamento por tempo determinado" control={<StyledRadio />} label="Trancamento por tempo determinado" />
+                  <FormControlLabel value="Outro" control={<StyledRadio />} label="Outro" />
+                </RadioGroup>
                 <TextField   
-                    value = {requerimento.outro}
-                    autoComplete="outro"
-                    name="outro"
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="outro"
-                    label=""
-                    onChange={(e) => setRequerimento({...requerimento, outro: e.target.value}) }
-                    />
+                  value = {requerimento.outro}
+                  autoComplete="outro"
+                  name="outro"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="outro"
+                  label=""
+                  onChange={(e) => setRequerimento({...requerimento, outro: e.target.value}) }
+                  />
+              </FormControl>
             </Grid>
-              
-            </RadioGroup>
-          </FormControl>
-           
-            <Grid item xs={6}>
-            <h2 component="legend">Esclarecimentos</h2>
-              <TextField
-                value = {requerimento.esclarecimento}
-                variant="outlined"
-                required
-                fullWidth
-                name="esclarecimentos"
-                label=""
-                type="esclarecimentos"
-                id="esclarecimentos"
-                multiline
-                autoComplete="" 
-                onChange={(e) => setRequerimento({...requerimento, esclarecimento: e.target.value}) }
-              />
+            
+            
+            <Grid item xs>
+              <FormControl style={{width: '100%'}}>
+                <h2 component="legend">Data</h2>
+                <TextField
+                  value = {requerimento.data}
+                  id="date"
+                  type="date"
+                  className={classes.textField}            
+                  InputLabelProps={{
+                  shrink: true,
+                  }}
+                  onChange={(e) => setRequerimento({...requerimento, data: e.target.value}) }
+                />
+                <h2 component="legend">Esclarecimentos</h2>
+                <TextField
+                  value = {requerimento.esclarecimento}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="esclarecimentos"
+                  label=""
+                  type="esclarecimentos"
+                  id="esclarecimentos"
+                  multiline
+                  autoComplete="" 
+                  onChange={(e) => setRequerimento({...requerimento, esclarecimento: e.target.value}) }
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                  disabled={validate}
+                  >
+                  Confirma
+                </Button>
+              </FormControl> 
             </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            disabled={validate}
-            >
-            Confirma
-          </Button>
-          
+            
+          </Grid> 
         </form>
 
       </main>

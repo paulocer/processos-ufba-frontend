@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(4),
   },
   paper: {
     marginTop: theme.spacing(4),
@@ -40,11 +40,12 @@ const useStyles = makeStyles(theme => ({
   },
   
   form: {
-    width: '200%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(7),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    width: '100%',
   },
   icon: {
     borderRadius: '50%',

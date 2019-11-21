@@ -44,7 +44,7 @@ export default function SignInSide() {
       });
       
     }catch(err){
-      alert(`Houve um erro ao efetuar o login`);
+      alert(`Erro ao efetuar o login. Verifique sua matrícula e senha.`);
     }
 
   }
