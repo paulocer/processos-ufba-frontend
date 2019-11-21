@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -16,28 +16,63 @@ import history from '../../history';
 import Copyright from '../tail';
 import useStyles from './style';
 import api from '../../server/config'
-import {Usuario} from '../../components/Usuario/Usuario'
+import {Usuario, getUserLogged, isUserLogged} from '../../components/Usuario/Usuario'
 
-export default function SignUp() {
-  const classes = useStyles();
+export default function SignUp(props) {
+  var { state } = props.location;
+  const classes = useStyles();  
 
-  const [usuario, setUsuario] = useState({ ...Usuario, emailPressed: false, confirmPassword: '', confirmPasswordPressed: false });
 
-  const validatePassword = (usuario.password !== '' && usuario.confirmPassword !== '') && (usuario.password === usuario.confirmPassword);
+  const [usuario, setUsuario] = useState({ ...Usuario});
+  const [validator, setValidator] = useState({emailPressed: false, confirmPassword: '', confirmPasswordPressed: false });
 
+  const validatePassword = (usuario.password !== '' && validator.confirmPassword !== '') && (usuario.password === validator.confirmPassword);
+
+  const isUpdate = state && state.matricula && state.matricula !== '' ;
+ 
+  useEffect(()=>{
+      const getUsuario = async ()=> {
+        const response = await getUserLogged(state.matricula)
+        setUsuario(response)
+    }
+    if(isUpdate){
+      getUsuario()
+    }
+  }, []);
+  
+  const validate = usuario && (usuario.nomeCompleto === '' || usuario.curso === '' || usuario.endereco ===  '' || usuario.bairro === '' || usuario.password === '' 
+  || usuario.matricula.length < 9 || usuario.cep < 9 || usuario.celular < 15)
+  
   //Efetua o cadastro realizando um post na api
    const handleSubmit = async (event) => {
     event.preventDefault();
 
-   try{
-     //realiza o post
-     await api.post('/cadastro', {usuario: usuario});
-     alert("Cadastro realizado com Sucesso!");
-     //retorna para a home
-     history.push('/');
-   }catch(err){
-      alert(`Houve um erro ao efetuar o cadastro`);
-   }       
+    if(!isUpdate){
+      // Cadastra um novo usuario
+      try{
+        //realiza o post
+        await api.post('/cadastro', {usuario: usuario});
+        alert("Cadastro realizado com Sucesso!");
+        //retorna para a home
+        history.push('/');
+      }catch(err){
+        alert(`Houve um erro ao efetuar o cadastro`);
+      }       
+
+    }else{
+      //Atualiza usuário existente
+      try{
+          //realiza o put
+          await api.put('/cadastro', {usuario: usuario});
+          alert("Cadastro atualizado com Sucesso!");
+          //retorna para a home
+          history.push({
+            pathname:'/home',
+            state: state});
+        }catch(err){
+          alert(`Houve um erro ao atualizar o cadastro`);
+        }   
+    }  
 
   }
 
@@ -166,7 +201,7 @@ export default function SignUp() {
                 name="email"
                 autoComplete="email"
                 onChange={(e) => setUsuario({...usuario, email: e.target.value}) }
-                onKeyDown = {(e) => setUsuario({...usuario, emailPressed: true})}
+                onKeyDown = {(e) => setValidator({...validator, emailPressed: true})}
               />
             </Grid>
             <Grid item xs={6}>
@@ -193,26 +228,27 @@ export default function SignUp() {
                 type="password"
                 id="confirmPassword"
                 autoComplete="current-password" 
-                onChange={(e) => setUsuario({...usuario, confirmPassword: e.target.value}) }
-                onKeyDown = {(e) => setUsuario({...usuario, confirmPasswordPressed: true})}
+                onChange={(e) => setValidator({...validator, confirmPassword: e.target.value}) }
+                onKeyDown = {(e) => setValidator({...validator, confirmPasswordPressed: true})}
               />
             </Grid>
           </Grid>
-          <p style={{color: 'red', fontWeight: 'bold'}}>{(!emailValidate(usuario.email) && usuario.emailPressed )? '*E-mail inválido': ''}</p>
-          <p style={{color: 'red', fontWeight: 'bold'}}>{(!validatePassword && usuario.confirmPasswordPressed )? '*As senhas não são iguais': ''}</p>
+          <p style={{color: 'red', fontWeight: 'bold'}}>{(!emailValidate(usuario.email) && validator.emailPressed )? '*E-mail inválido': ''}</p>
+          <p style={{color: 'red', fontWeight: 'bold'}}>{(!validatePassword && validator.confirmPasswordPressed )? '*As senhas não são iguais': ''}</p>
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            disabled={!usuario.validate() || !validatePassword || !emailValidate(usuario.email)}
+            disabled={validate || !validatePassword || !emailValidate(usuario.email)}
             >
             Confirma
           </Button>
+
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="/" variant="body2">
+              <Link href="/" variant="body2" >
                 Já tem cadastro? Faça o login.
               </Link>
             </Grid>

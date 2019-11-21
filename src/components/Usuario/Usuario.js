@@ -1,4 +1,5 @@
 import history from '../../history';    
+import api from '../../server/config'
 
 export const Usuario = {
     nomeCompleto: '',
@@ -9,20 +10,17 @@ export const Usuario = {
     cep: '',
     celular: '',
     email: '',
-    password: '', 
-    validate: () => {        
-        if(this && (this.nomeCompleto === '' || this.curso === '' || this.endereco ===  '' || this.bairro === '' || this.password === '' 
-            || this.matricula.length < 9 || this.cep < 9 || this.celular < 15)){
-            return false
-        }else{
-             return true;
-        }
-    }
+    password: ''
 }
 
 
 
-export function getUserLogged(){}
+export async function getUserLogged(matricula){
+    if(matricula){
+        const response =  await api.post('/usuario', {matricula: matricula});
+        return response.data;
+    }
+}
 
 export function isUserLogged(state){
     if(!state || !state.matricula ||state.matricula === ''){
