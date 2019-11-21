@@ -30,6 +30,16 @@ export const Requerimento = {
   esclarecimento: ''
 }
 
+async function removeRequerimento(id){
+  if(window.confirm("Deseja realmente remover o requerimento")){
+    try{
+    await api.delete('/requerimento', {data: {id: id}});
+      alert("O requerimento foi removido com sucesso");
+    }catch(error){
+      alert("Houve um erro ao tentar remover o requerimento");
+    }
+  }
+}
 export async function getRequerimentos(matricula){
   if(matricula){
     try{
@@ -63,16 +73,20 @@ export default function SimpleCard(props) {
             <p><Button>{<Email />}  Enviar email</Button></p>
           </div>
         </Popup>
+        
         <Link href="#" className={classes.link} style={{ color: "#000", textDecoration: "none" }}>
           <Button size="small">{<EditIcon />}Editar</Button>
         </Link>
         <Link href="#" className={classes.link} style={{ color: "#000", textDecoration: "none" }}>
           <Button size="small">{<FileCopyIcon />}Clonar</Button>
-        </Link>
-        <Link href="#" className={classes.link} style={{ color: "#000", textDecoration: "none" }}>
-          <Button size="small">{<DeleteForeverIcon />}Excluir</Button>
-        </Link>
-        
+        </Link> 
+          <Button 
+          size="small" 
+          type = "submit"
+          className={classes.link} 
+          style={{ color: "#000", textDecoration: "none" }}
+          onClick={(e) => {removeRequerimento(props.id)}}>
+          {<DeleteForeverIcon />}Excluir</Button>            
       </CardActions>
     </Card>
     <br />
