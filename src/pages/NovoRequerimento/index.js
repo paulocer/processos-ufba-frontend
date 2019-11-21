@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   AppBar,
   CssBaseline,
@@ -40,15 +40,15 @@ import clsx from 'clsx';
 
 import history from '../../history';
 import api from '../../server/config'
-import {Requerimento} from '../../components/Processo/Processo'
+import {Requerimento, getRequerimento} from '../../components/Processo/Processo'
 
 export default function NovoProcesso(props) {
+  console.log(props);
   var { state } = props.location;
   const { container } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [processos, setProcessos] = useState([]);
   
   // Verifica se o usuario está logado
   if(!isUserLogged(state)){
@@ -56,9 +56,23 @@ export default function NovoProcesso(props) {
     state = {matricula: ''};
   }
   
+  const isUpdate = state && state.idRequerimento;
+
   const [requerimento, setRequerimento] = useState({ ...Requerimento, matricula: state.matricula });
   const validate = (requerimento.data === '' || requerimento.esclarecimento === '' || (requerimento.objeto ==='' && requerimento.outro === ''));
 
+ 
+  useEffect(()=>{
+    const getReq = async ()=> {
+      const response = await getRequerimento(state.idRequerimento);
+      setRequerimento(response)
+  }
+    if(isUpdate)
+          getReq()
+    }, [state.idRequerimento]); 
+  
+  console.log(requerimento);
+  // 
     
   //Efetua o cadastro realizando um post na api
    const handleSubmit = async (event) => {
@@ -96,11 +110,6 @@ function StyledRadio(props) {
 
   const icons = [<HistoryIcon />, <AddIcon />, <SettingsApplicationsIcon />, <ExitToAppIcon />]
   const caminho = [{ pathname: '/home', state: state }, { pathname: '/novorequerimento', state: state }, { pathname:'/cadastro', state: state }, { pathname:'/'}]
-
- 
-
-
-  // 
 
   const drawer = (
     <div>

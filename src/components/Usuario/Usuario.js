@@ -17,7 +17,7 @@ export const Usuario = {
 
 export async function getUserLogged(matricula){
     if(matricula){
-        const response =  await api.post('/usuario', {matricula: matricula});
+        const response =  await api.post('/recupera/usuario', {matricula: matricula});
         return response.data;
     }
 }
