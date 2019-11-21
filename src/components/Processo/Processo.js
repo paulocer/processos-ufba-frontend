@@ -51,7 +51,7 @@ export default function SimpleCard(props) {
         <Typography className={classes.title} color="textSecondary" gutterBottom>
           Data: {props.data}
         </Typography>
-        <Typography className={classes.pos} color="black" gutterBottom>
+        <Typography className={classes.pos} gutterBottom>
           Objeto do Requerimento: {props.desc}
         </Typography>
       </CardContent>
