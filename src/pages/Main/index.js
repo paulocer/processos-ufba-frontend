@@ -37,7 +37,7 @@ export default function ResponsiveDrawer(props) {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [processos, setProcessos] = useState([]);
-  
+
   // Verifica se o usuario está logado
   if(!isUserLogged(state)){
     // Usado para evitar erro ao tentar recuperar a matricula
@@ -137,7 +137,7 @@ export default function ResponsiveDrawer(props) {
           // processos.length === 0 ? <Box style={{fontSize:"5vw", marginTop:"20%"}}><div>Nenhum processo foi criado ainda</div></Box> :
           processos.map(
             (element, index) => {
-              return <Processo key={index} id={element._id}  data={element.data} desc={element.objeto} />
+              return <Processo key={index} id={element._id}  data={element.data} desc={element.objeto} inheritProps={props} />
             }
           )
         }

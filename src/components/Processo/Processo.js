@@ -20,6 +20,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import Popup from "reactjs-popup"
 import useStyles from './style';
 import api from '../../server/config'
+import history from '../../history';
 
 
 export const Requerimento = {
@@ -35,6 +36,7 @@ async function removeRequerimento(id){
     try{
     await api.delete('/requerimento', {data: {id: id}});
       alert("O requerimento foi removido com sucesso");
+      history.go(0);
     }catch(error){
       alert("Houve um erro ao tentar remover o requerimento");
     }
