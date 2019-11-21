@@ -1,33 +1,55 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { PDFViewer, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+
+import api from '../../server/config'
 
 // Create styles
 const styles = StyleSheet.create({
-  page: {
-    flexDirection: 'row',
-    backgroundColor: '#E4E4E4'
+  viewer: {
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
   },
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1
-  }
+  page: {
+    padding: 40,
+    
+  },
 });
 
 // Create Document Component
-const MyDocument = () => (
-    <PDFViewer>
+const MyDocument = (props) => {
+  console.log(': ', props.match.params.id)
+
+  useEffect(() => {
+    const getRequerimento = async (id) => {
+      if(id){
+        try{
+          const response =  await api.post('/recupera/requerimento', {id});
+          delete response.data.result._id;
+          console.log(': ', response.data.result);
+
+        }catch(error){
+          return;
+        }
+      }
+    }
+    // getRequerimento(props);
+    
+  }, []);
+
+  
+  return (
+    <PDFViewer style={styles.viewer}>
         <Document>
-            <Page size="A4" style={styles.page}>
+            <Page style={styles.page}>
                 <View style={styles.section}>
-                    <Text>Section #1</Text>
-                </View>
-                <View style={styles.section}>
-                    <Text>Section #2</Text>
+                    <Text>Processo</Text>
                 </View>
             </Page>
         </Document>
     </PDFViewer>
-);
+  )
+};
 
 export default MyDocument;
+

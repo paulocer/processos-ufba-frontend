@@ -16,6 +16,7 @@ import DeleteForeverIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import ShareIcon from '@material-ui/icons/Share';
+import {Link as LinkNavigation} from 'react-router-dom'
 
 import Popup from "reactjs-popup"
 import useStyles from './style';
@@ -96,9 +97,11 @@ export default function SimpleCard(props) {
       <CardActions>
         <Popup modal trigger={<Button size="small">{<ShareIcon />}Compartilhar</Button>}>
           <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-            <p><Button>{<Print />}  Impressora</Button></p>
-            <p><Button>{<PictureAsPdf />}  Gerar PDF</Button></p>
-            <p><Button>{<Email />}  Enviar email</Button></p>
+            
+            <LinkNavigation to={`/pdf/${props.id}`}>
+              <p><Button>{<PictureAsPdf />}  Gerar PDF</Button></p>
+            </LinkNavigation>
+            
           </div>
         </Popup>
         
