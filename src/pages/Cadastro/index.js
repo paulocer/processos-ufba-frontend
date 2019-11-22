@@ -16,7 +16,7 @@ import history from '../../history';
 import Copyright from '../tail';
 import useStyles from './style';
 import api from '../../server/config'
-import {Usuario, getUserLogged, isUserLogged} from '../../components/Usuario/Usuario'
+import {Usuario, getUserLogged} from '../../components/Usuario/Usuario'
 
 export default function SignUp(props) {
   var { state } = props.location;

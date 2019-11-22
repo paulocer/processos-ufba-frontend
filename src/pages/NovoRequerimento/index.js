@@ -48,7 +48,7 @@ export default function NovoProcesso(props) {
   const { container } = props;
   const classes = useStyles();
   const theme = useTheme();
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileOpen] = useState(false);
   
   // Verifica se o usuario está logado
   if(!isUserLogged(state)){
