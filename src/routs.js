@@ -20,7 +20,7 @@ const Routs = () => {
                 <Route path='/novorequerimento' component={NovoProcesso} />
                 <Route path='/recupera' component={Recupera} />
                 <Route path='/reset/:hash' component={Reset} />
-                <Route path='/pdf/:id' component={Pdf} />
+                <Route path='/pdf/:matricula/:id' component={Pdf} />
             </Switch>
         </Router>
     )

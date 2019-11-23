@@ -11,9 +11,10 @@ import {
 } from '@material-ui/icons';
 import DeleteForeverIcon from '@material-ui/icons/Delete';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
-import {Link as LinkNavigation} from 'react-router-dom'
+import {Link} from 'react-router-dom';
+import {parseISO, format} from 'date-fns';
+import has from 'lodash/has';
 
-import Popup from "reactjs-popup"
 import useStyles from './style';
 import api from '../../server/config'
 import history from '../../history';
@@ -77,44 +78,47 @@ export async function getRequerimentos(matricula){
 
 export default function SimpleCard(props) {
   const classes = useStyles();
-  console.log(props);
 
-  return (<>
-    <Card className={classes.card}>
-      <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Data: {props.data}
-        </Typography>
-        <Typography className={classes.pos} gutterBottom>
-          Objeto do Requerimento: {props.desc}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Popup modal trigger={<Button size="small">{<PictureAsPdf />}Gerar PDF</Button>}>
-          <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-            
-            <LinkNavigation to={`/pdf/${props.id}`}>
-              <p><Button>{<PictureAsPdf />}  Gerar PDF</Button></p>
-            </LinkNavigation>
-            
-          </div>
-        </Popup>
-        
-         <Button 
-          size="small"         
-          className={classes.link} 
-          style={{ color: "#000", textDecoration: "none" }}
-          onClick={(e) => {editRequerimento(props.id, props.inheritProps)}}>
-          {<FileCopyIcon />}Clonar</Button>
-          <Button 
-          size="small"         
-          className={classes.link} 
-          style={{ color: "#000", textDecoration: "none" }}
-          onClick={(e) => {removeRequerimento(props.id)}}>
-          {<DeleteForeverIcon />}Excluir</Button>            
-      </CardActions>
-    </Card>
-    <br />
-  </>
+  return (
+    <>
+      <Card className={classes.card}>
+        <CardContent>
+          <Typography className={classes.title} color="textSecondary" gutterBottom>
+            Data: {has(props, 'data') && format(parseISO(props.data), "dd/MM/yyyy")}
+          </Typography>
+          <Typography className={classes.pos} gutterBottom>
+            Objeto do Requerimento: {props.desc}
+          </Typography>
+        </CardContent>
+        <CardActions>
+            <Button 
+              size="small"         
+              className={classes.link} 
+              style={{ color: "#000", textDecoration: "none" }}>
+              <Link className={classes.link}
+                style={{textDecoration: 'none', color: 'black', display: 'flex', alignItems: 'center'}}
+                to={`/pdf/${props.inheritProps.location.state.matricula}/${props.id}`}
+                target='_blank'>
+                {<PictureAsPdf /> } Gerar PDF
+              </Link>
+            </Button>
+            <Button 
+              size="small"         
+              className={classes.link} 
+              style={{ color: "#000", textDecoration: "none" }}
+              onClick={(e) => {editRequerimento(props.id, props.inheritProps)}}>
+              {<FileCopyIcon /> } Clonar
+            </Button>
+            <Button 
+              size="small"         
+              className={classes.link} 
+              style={{ color: "#000", textDecoration: "none" }}
+              onClick={(e) => {removeRequerimento(props.id)}}>
+              {<DeleteForeverIcon /> } Excluir
+            </Button>            
+        </CardActions>
+      </Card>
+      <br />
+    </>
   );
 }

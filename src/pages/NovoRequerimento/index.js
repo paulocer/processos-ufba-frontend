@@ -22,7 +22,8 @@ import {
   ExitToApp as ExitToAppIcon,
   SettingsApplications as SettingsApplicationsIcon,
 } from '@material-ui/icons/'
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
+import get from 'lodash/get';
 
 import Copyright from '../tail'
 import useStyles from './style'
@@ -73,8 +74,7 @@ export default function NovoProcesso(props) {
       }
     }, [state.idRequerimento]); 
   
-  console.log(requerimento);
-  // 
+  // console.log(': ', requerimento);
     
   //Efetua o cadastro realizando um post na api
    const handleSubmit = async (event) => {
@@ -191,7 +191,7 @@ function StyledRadio(props) {
             <Grid item xs>
               <FormControl component="fieldset">
                 <h2 component="legend">Objeto do Requerimento</h2>
-                <RadioGroup aria-label="requerimento" name="customized-radios" onChange={(e) => setRequerimento({...requerimento, objeto: e.target.value}) }>
+                <RadioGroup aria-label="requerimento" name="customized-radios" onChange={(e) => (e.target.value === 'Outro' ? setRequerimento({...requerimento, objeto: e.target.value}) : setRequerimento({...requerimento, objeto: e.target.value, outro: ''}) )}>
                   <FormControlLabel value="Aproveitamento de estudos" control={<StyledRadio />} label="Aproveitamento de estudos" />
                   <FormControlLabel value="Desistência definitiva de curso" control={<StyledRadio />} label="Desistência definitiva de curso" />
                   <FormControlLabel value="Dilatação do prazo máximo para conclusão do curso" control={<StyledRadio />} label="Dilatação do prazo máximo para conclusão do curso" />
@@ -216,6 +216,7 @@ function StyledRadio(props) {
                   rowsMax="2"
                   id="outro"
                   label=""
+                  disabled={get(requerimento, 'objeto', '') === 'Outro' ? false : true}
                   onChange={(e) => setRequerimento({...requerimento, outro: e.target.value}) }
                   />
               </FormControl>
