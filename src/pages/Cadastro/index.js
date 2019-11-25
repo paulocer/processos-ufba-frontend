@@ -11,7 +11,6 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import NumberFormat from 'react-number-format';
 import {validate as emailValidate}  from 'email-validator';
-
 import history from '../../history';
 import Copyright from '../tail';
 import useStyles from './style';
@@ -21,7 +20,6 @@ import {Usuario, getUserLogged} from '../../components/Usuario/Usuario'
 export default function SignUp(props) {
   var { state } = props.location;
   const classes = useStyles();  
-
 
   const [usuario, setUsuario] = useState({ ...Usuario});
   const [validator, setValidator] = useState({emailPressed: false, confirmPassword: '', confirmPasswordPressed: false });
@@ -57,7 +55,6 @@ export default function SignUp(props) {
       }catch(err){
         alert(`Houve um erro ao efetuar o cadastro`);
       }       
-
     }else{
       //Atualiza usuário existente
       try{
@@ -72,7 +69,6 @@ export default function SignUp(props) {
           alert(`Houve um erro ao atualizar o cadastro`);
         }   
     }  
-
   }
 
   const logIn = 
@@ -93,8 +89,6 @@ export default function SignUp(props) {
   >
   Voltar
     </Button>
-
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

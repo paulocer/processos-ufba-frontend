@@ -10,7 +10,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import NumberFormat from 'react-number-format';
-
 import history from '../../history';
 import useStyles from './style'
 import Copyright from '../tail';
@@ -39,7 +38,6 @@ export default function SignIn() {
     }catch(err){
       alert(`Houve um erro tentar recuperar a senha, verifique se sua matricula está correta`);
     }
-
   }
 
   return (
@@ -56,7 +54,6 @@ export default function SignIn() {
         <NumberFormat
             customInput={TextField}
             format="#########"
-
             variant="outlined"
             margin="normal"
             required

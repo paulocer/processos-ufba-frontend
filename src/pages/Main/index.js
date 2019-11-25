@@ -23,7 +23,6 @@ import {
   SettingsApplications as SettingsApplicationsIcon,
 } from '@material-ui/icons/'
 import {Link} from 'react-router-dom'
-
 import Copyright from '../tail'
 import useStyles from './style'
 import Processo from '../../components/Processo/Processo.js'
@@ -133,7 +132,6 @@ export default function ResponsiveDrawer(props) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         {
-
           processos.length === 0 ? <Box style={{marginTop:"5%"}}><div>Nenhum processo cadastrado.</div></Box> :
           processos.map(
             (element, index) => {

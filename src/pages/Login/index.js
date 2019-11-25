@@ -12,7 +12,6 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import NumberFormat from 'react-number-format';
-
 import history from '../../history';
 import useStyles from './style';
 import Copyright from '../tail';
@@ -46,7 +45,6 @@ export default function SignInSide() {
     }catch(err){
       alert(`Erro ao efetuar o login. Verifique sua matrícula e senha.`);
     }
-
   }
   return (
     <Grid container component="main" className={classes.root}>
@@ -64,7 +62,6 @@ export default function SignInSide() {
             <NumberFormat
               customInput={TextField}
               format="#########"
-
               variant="outlined"
               margin="normal"
               required

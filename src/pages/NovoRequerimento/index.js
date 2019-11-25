@@ -14,7 +14,6 @@ import {
   useTheme,
   Box,
 } from '@material-ui/core/'
-
 import {
   Menu as MenuIcon,
   Add as AddIcon,
@@ -24,21 +23,17 @@ import {
 } from '@material-ui/icons/'
 import {Link} from 'react-router-dom';
 import get from 'lodash/get';
-
 import Copyright from '../tail'
 import useStyles from './style'
 import {isUserLogged} from '../../components/Usuario/Usuario'
-
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import clsx from 'clsx';
-
 import history from '../../history';
 import api from '../../server/config'
 import {Requerimento, getRequerimento} from '../../components/Processo/Processo'
@@ -58,10 +53,8 @@ export default function NovoProcesso(props) {
   }
   
   const isUpdate = state && state.idRequerimento;
-
   const [requerimento, setRequerimento] = useState({ ...Requerimento, matricula: state.matricula });
   const validate = (requerimento.data === '' || requerimento.esclarecimento === '' || (requerimento.objeto ==='' && requerimento.outro === ''));
-
  
   useEffect(()=>{
     const getReq = async ()=> {
@@ -91,7 +84,6 @@ export default function NovoProcesso(props) {
    }catch(err){
       alert(`Houve um erro ao efetuar o cadastro do requerimento`);
    }       
-
   }
 
   // Inspired by blueprintjs
@@ -222,7 +214,6 @@ function StyledRadio(props) {
               </FormControl>
             </Grid>
             
-            
             <Grid item xs>
               <FormControl style={{width: '100%'}}>
                 <h2 component="legend">Data</h2>
@@ -264,10 +255,8 @@ function StyledRadio(props) {
                 </Button>
               </FormControl> 
             </Grid>
-            
           </Grid> 
         </form>
-
       </main>
     </div>
   );

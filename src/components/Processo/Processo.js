@@ -14,11 +14,9 @@ import FileCopyIcon from '@material-ui/icons/FileCopy';
 import {Link} from 'react-router-dom';
 import {parseISO, format} from 'date-fns';
 import has from 'lodash/has';
-
 import useStyles from './style';
 import api from '../../server/config'
 import history from '../../history';
-
 
 export const Requerimento = {
   matricula: '', 
@@ -46,8 +44,6 @@ function editRequerimento(id, inheritProps){
     pathname: '/novorequerimento',
     state: inheritProps.location.state
   })
-
-
 }
 
 export async function getRequerimento(id){
@@ -60,9 +56,7 @@ export async function getRequerimento(id){
       return;
     }
   }
-
 }
-
 
 export async function getRequerimentos(matricula){
   if(matricula){

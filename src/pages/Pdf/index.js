@@ -5,9 +5,7 @@ import get from 'lodash/get';
 import has from 'lodash/has';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
-
 import api from '../../server/config';
-
 import layout from '../../components/Images/Requerimento.jpg';
 import openSans from '../../components/Fonts/OpenSans-Regular.ttf';
 
@@ -81,7 +79,6 @@ const MyDocument = (props) => {
           const response =  await api.post('/recupera/requerimento', {id});
           delete response.data.result._id;
           setRequerimento(response.data.result);
-
         }catch(error){
           return;
         }
@@ -96,7 +93,6 @@ const MyDocument = (props) => {
           const response =  await api.post('/recupera/usuario', {matricula});
           delete response.data._id;
           setAluno(response.data);
-
         }catch(error){
           return;
         }
@@ -139,7 +135,6 @@ const MyDocument = (props) => {
                       <Text style={{marginLeft: 20}}>{has(requerimento, 'data') && format(parseISO(requerimento.data), "dd    MM    yy")}</Text>
                     </View>
                   </View>
-
                   <View style={[styles.sectionTwo, styles.marginPage, {paddingTop: 12}]}>
                     <View style={[{height: 10, marginLeft: 1}, styles.row]}>
                       <View style={[{marginLeft: 5}, styles.box, handleCheckbox(['Aproveitamento de estudos'], get(requerimento, 'objeto', ''))]} />
@@ -164,17 +159,14 @@ const MyDocument = (props) => {
                       <View style={[{marginLeft: 5}, styles.box, handleCheckbox(['Permanência no curso'], get(requerimento, 'objeto', ''))]} />
                       <View style={[{marginLeft: 254}, styles.box, handleCheckbox(['Trancamento por tempo determinado'], get(requerimento, 'objeto', ''))]} />
                     </View>
-
                     <View style={[{alignItems: 'flex-end', marginTop: 19}, styles.row]}>
                       <View style={[{marginLeft: 51}, styles.box, handleCheckbox(['Outro'], get(requerimento, 'objeto', ''))]} />
                       <Text style={[{marginLeft: 58, width: 370, fontSize: 10}, styles.textContainer]}>{get(requerimento, 'outro', '')}</Text>
                     </View>
                   </View>
-
                   <View style={[styles.sectionThree, styles.marginPage]}>
                     <Text style={{lineHeight: 1.51}}>{get(requerimento, 'esclarecimento', '')}</Text>
                   </View>
-
                   <View style={[styles.sectionFour, styles.marginPage]}>
                     <View style={[{marginTop: 3}, styles.row]}>
                       <Text style={[{width: 306}, styles.textContainer]}>{get(aluno, 'nomeCompleto', '')}</Text>

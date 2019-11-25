@@ -7,7 +7,6 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-
 import history from '../../../history';
 import useStyles from '../style'
 import Copyright from '../../tail';
@@ -45,7 +44,6 @@ export default function Reset({match}) {
       alert(`Houve um erro ao tentar alterar a sua senha, verifique se ela não foi alterada anteriormente`);
       history.push('/');
     } 
-
   }
 
   return (
@@ -59,7 +57,6 @@ export default function Reset({match}) {
         <Typography component="h1" variant="h5">
           Recuperação de Senha
         </Typography>
-       
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
         <TextField        
             variant="outlined"
