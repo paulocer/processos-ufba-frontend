@@ -11,7 +11,7 @@
     "date-fns": "^2.8.1",
     "email-validator": "^2.0.4",
     "image-js": "^0.21.7",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-number-format": "^4.3.1",
